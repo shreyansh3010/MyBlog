@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/imageButton"
+        android:id="@+id/imageSelect"
         android:background="#00ffffff"
         android:src="@mipmap/add_btn"
         android:scaleType="centerCrop"
@@ -22,10 +22,10 @@
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:hint="Post Title..."
-        android:layout_below="@+id/imageButton"
+        android:layout_below="@+id/imageSelect"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
-        android:id="@+id/editText"
+        android:id="@+id/titleField"
         android:background="@drawable/input_outline"
         android:padding="10dp"
         android:layout_marginLeft="20dp"
@@ -35,14 +35,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textMultiLine"
-        android:layout_below="@+id/editText"
+        android:layout_below="@+id/titleField"
         android:hint="Post Description..."
         android:background="@drawable/input_outline"
         android:padding="10dp"
         android:layout_marginTop="30dp"
-        android:id="@+id/editText2"
-        android:layout_marginRight="20dp"
-        android:layout_alignStart="@+id/editText" />
+        android:id="@+id/DescField"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp" />
 
     <Button
         android:text="Post"
@@ -52,5 +52,5 @@
         android:textColor="#ffffff"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/button2" />
+        android:id="@+id/submitButton" />
 </RelativeLayout>
