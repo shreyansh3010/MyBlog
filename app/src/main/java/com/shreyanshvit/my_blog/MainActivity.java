@@ -1,5 +1,6 @@
 package com.shreyanshvit.my_blog;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -10,17 +11,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView mBlogList;
     private DatabaseReference mDatabase;
+    private ProgressDialog mprogress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,13 +37,16 @@ public class MainActivity extends AppCompatActivity {
         mBlogList = (RecyclerView) findViewById(R.id.blog_list);
         mBlogList.setHasFixedSize(true);
         mBlogList.setLayoutManager(new LinearLayoutManager(this));
+        mprogress = new ProgressDialog(this);
+
 
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
+        mprogress.setMessage("Please wait...");
+        mprogress.show();
         FirebaseRecyclerAdapter<Blog, BlogViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Blog, BlogViewHolder>(
 
                 Blog.class,
@@ -49,16 +56,19 @@ public class MainActivity extends AppCompatActivity {
         ) {
             @Override
             protected void populateViewHolder(BlogViewHolder viewHolder, Blog model, int position) {
-
                 viewHolder.setTitle(model.getTitle());
                 viewHolder.setDesc(model.getDesc());
                 viewHolder.setImage(getApplicationContext() ,model.getImage());
+                mprogress.dismiss();
             }
         };
         mBlogList.setAdapter(firebaseRecyclerAdapter);
+
     }
 
     public static class BlogViewHolder extends RecyclerView.ViewHolder {
+
+
 
         View mView;
         public BlogViewHolder(View itemView) {
@@ -78,8 +88,20 @@ public class MainActivity extends AppCompatActivity {
         }
 
         public void setImage(Context ctx, String image){
+            final ProgressBar mprogressBar;
+            mprogressBar = (ProgressBar) mView.findViewById(R.id.progressBar5);
             ImageView post_image = (ImageView) mView.findViewById(R.id.post_image);
-            Picasso.with(ctx).load(image).into(post_image);
+            Picasso.with(ctx).load(image).into(post_image, new Callback() {
+                @Override
+                public void onSuccess() {
+                    mprogressBar.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onError() {
+
+                }
+            });
         }
     }
 
