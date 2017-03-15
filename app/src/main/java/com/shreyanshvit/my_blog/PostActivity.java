@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -24,6 +26,7 @@ public class PostActivity extends AppCompatActivity {
     private ImageButton imageButton;
     private static final int GALLERY_REQUEST = 1;
     private EditText mPostTitle;
+    private DatabaseReference mDatabase;
     private EditText mPostDesc;
     private Button mSubmitBtn;
     private Uri imageUri = null;
@@ -35,6 +38,7 @@ public class PostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post);
 
         mstorage = FirebaseStorage.getInstance().getReference();
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Blog");
 
         imageButton = (ImageButton)findViewById(R.id.imageSelect);
         mPostTitle = (EditText)findViewById(R.id.titleField);
@@ -66,8 +70,8 @@ public class PostActivity extends AppCompatActivity {
         mprogress.setMessage("Posting...");
         mprogress.show();
 
-        String title_val = mPostTitle.getText().toString().trim();
-        String Desc_val = mPostDesc.getText().toString().trim();
+        final String title_val = mPostTitle.getText().toString().trim();
+        final String Desc_val = mPostDesc.getText().toString().trim();
 
         if(!TextUtils.isEmpty(title_val) && !TextUtils.isEmpty(Desc_val) && imageUri !=null){
             StorageReference filePath = mstorage.child("Blog_images").child(imageUri.getLastPathSegment());
@@ -75,8 +79,15 @@ public class PostActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     Uri downlodUri =  taskSnapshot.getDownloadUrl();
+                    DatabaseReference new_post = mDatabase.push();
+
+                    new_post.child("title").setValue(title_val);
+                    new_post.child("desc").setValue(Desc_val);
+                    new_post.child("image").setValue(downlodUri.toString());
+
                     mprogress.dismiss();
                     Toast.makeText(PostActivity.this,"Posted",Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(PostActivity.this,MainActivity.class));
                 }
             });
         }
