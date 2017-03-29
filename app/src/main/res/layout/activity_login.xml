@@ -48,13 +48,4 @@
         android:id="@+id/loginPasswordField"
         android:hint="Password..." />
 
-    <com.google.android.gms.common.SignInButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="55dp"
-        android:layout_below="@+id/loginBtn"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/googleBtn">
-
-    </com.google.android.gms.common.SignInButton>
 </RelativeLayout>
