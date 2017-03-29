@@ -48,4 +48,13 @@
         android:id="@+id/loginPasswordField"
         android:hint="Password..." />
 
+    <TextView
+        android:text="Forget password?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="69dp"
+        android:id="@+id/ForgetPasswod"
+        android:layout_above="@+id/needAcc"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

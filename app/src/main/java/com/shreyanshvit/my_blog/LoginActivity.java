@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
@@ -46,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private GoogleApiClient mGoogleApiClient;
     private int backButtonCount = 0;
+    private TextView mForgetPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,7 @@ public class LoginActivity extends AppCompatActivity {
 
         mLoginPasswordField = (EditText) findViewById(R.id.loginPasswordField);
         mLoginEmailField = (EditText) findViewById(R.id.loginEmailField);
+        mForgetPassword = (TextView) findViewById(R.id.ForgetPasswod);
         mLoginBtn = (Button) findViewById(R.id.loginBtn);
         mNeddAcc = (Button) findViewById(R.id.needAcc);
 
@@ -76,13 +79,20 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-
-
         mNeddAcc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 goToRegister();
                 backButtonCount = 0;
+            }
+        });
+
+        mForgetPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent passintent = new Intent(LoginActivity.this, FogetPassword.class);
+                passintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(passintent);
             }
         });
 
