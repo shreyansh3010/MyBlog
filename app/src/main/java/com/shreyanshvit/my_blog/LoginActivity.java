@@ -45,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 1;
     private static final String TAG = "LoginActivity";
     private GoogleApiClient mGoogleApiClient;
+    private int backButtonCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         mDatabaseUser.keepSynced(true);
 
         mProgress = new ProgressDialog(this);
-
+        mProgress.setCanceledOnTouchOutside(false);
 
 
         mLoginPasswordField = (EditText) findViewById(R.id.loginPasswordField);
@@ -81,6 +82,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 goToRegister();
+                backButtonCount = 0;
             }
         });
 
@@ -154,5 +156,23 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+    }
+    @Override
+    public void onBackPressed()
+    {
+        if(backButtonCount >= 1)
+        {
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            backButtonCount = 0;
+
+        }
+        else
+        {
+            Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT).show();
+            backButtonCount++;
+        }
     }
 }

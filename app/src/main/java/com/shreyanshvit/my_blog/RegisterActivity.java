@@ -37,6 +37,7 @@ public class RegisterActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
 
         mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setCanceledOnTouchOutside(false);
 
         mNameFiled = (EditText) findViewById(R.id.nameField);
         mEmailField = (EditText) findViewById(R.id.emailField);

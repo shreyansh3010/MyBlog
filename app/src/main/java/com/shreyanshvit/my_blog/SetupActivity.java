@@ -45,6 +45,7 @@ import com.theartofdev.edmodo.cropper.CropImageView;
         mAuth = FirebaseAuth.getInstance();
 
         mProgress = new ProgressDialog(this);
+        mProgress.setCanceledOnTouchOutside(false);
         mSetupImage = (ImageButton) findViewById(R.id.profileImageBtn);
         mNameFiled = (EditText) findViewById(R.id.setupNameField);
         mSubmitBtn = (Button) findViewById(R.id.setupSubmitBtn);

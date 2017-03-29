@@ -45,6 +45,7 @@ public class PostActivity extends AppCompatActivity {
         mPostDesc = (EditText)findViewById(R.id.DescField);
         mSubmitBtn = (Button)findViewById(R.id.submitButton);
         mprogress = new ProgressDialog(this);
+        mprogress.setCanceledOnTouchOutside(false);
 
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override

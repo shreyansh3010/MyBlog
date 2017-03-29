@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
         mBlogList.setHasFixedSize(true);
         mBlogList.setLayoutManager(new LinearLayoutManager(this));
         mprogress = new ProgressDialog(this);
+        mprogress.setCanceledOnTouchOutside(false);
 
         checkUserExist();
 
