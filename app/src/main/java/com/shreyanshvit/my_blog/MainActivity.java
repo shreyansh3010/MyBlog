@@ -43,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Blog");
         mDatabaseUser = FirebaseDatabase.getInstance().getReference().child("Users");
 

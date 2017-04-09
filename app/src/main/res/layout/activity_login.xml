@@ -22,14 +22,6 @@
         android:hint="Email..." />
 
     <Button
-        android:text="Log In"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/loginBtn" />
-
-    <Button
         android:text="Need a new acc."
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -48,13 +40,30 @@
         android:id="@+id/loginPasswordField"
         android:hint="Password..." />
 
+    <Button
+        android:text="Log In"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/loginBtn"
+        android:layout_below="@+id/loginPasswordField"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="22dp" />
+
     <TextView
         android:text="Forget password?"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="69dp"
+        android:layout_marginBottom="40dp"
         android:id="@+id/ForgetPasswod"
         android:layout_above="@+id/needAcc"
         android:layout_centerHorizontal="true" />
+
+    <com.google.android.gms.common.SignInButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="33dp"
+        android:id="@+id/GoogleLoginBtn"
+        android:layout_below="@+id/loginBtn"
+        android:layout_alignEnd="@+id/ForgetPasswod"></com.google.android.gms.common.SignInButton>
 
 </RelativeLayout>

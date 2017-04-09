@@ -49,6 +49,7 @@ public class LoginActivity extends AppCompatActivity {
     private int backButtonCount = 0;
     private TextView mForgetPassword;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,6 +97,8 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+
+
     }
 
 
@@ -106,6 +109,32 @@ public class LoginActivity extends AppCompatActivity {
         nedd_acc.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(nedd_acc);
 
+    }
+
+
+
+
+    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
+
+        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
+
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "signInWithCredential", task.getException());
+                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                        // ...
+                    }
+                });
     }
 
 
@@ -140,31 +169,35 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void checkUserExist() {
-        final String user_id = mAuth.getCurrentUser().getUid();
 
-        mDatabaseUser.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+        if(mAuth.getCurrentUser() !=null) {
+            final String user_id = mAuth.getCurrentUser().getUid();
 
-                if(dataSnapshot.hasChild(user_id)){
+            mDatabaseUser.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
 
-                    Intent mainintent = new Intent(LoginActivity.this, MainActivity.class);
-                    mainintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(mainintent);
+                    if (dataSnapshot.hasChild(user_id)) {
 
-                }else {
-                    Intent setupintent = new Intent(LoginActivity.this, SetupActivity.class);
-                    setupintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(setupintent);
+                        Intent mainintent = new Intent(LoginActivity.this, MainActivity.class);
+                        mainintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(mainintent);
+
+                    }
+                    else {
+                        Intent setupintent = new Intent(LoginActivity.this, SetupActivity.class);
+                        setupintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(setupintent);
+                    }
+
                 }
 
-            }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+                }
+            });
+        }
 
     }
     @Override
